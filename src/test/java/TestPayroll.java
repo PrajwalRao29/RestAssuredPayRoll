@@ -28,13 +28,13 @@ public class TestPayroll {
 
     @Test
     public void test1_CheckPostMethod() {
-        RestAssured.given()
+        Response response=RestAssured.given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body("{\"name\":\"xyz\",\"salary\":\"8000\"}")
-                .when().post("/employees/create")
-                .then()
-                .body("id",Matchers.any(Integer.class));
+                .when().post("/employees/create");
+        Assert.assertEquals(201,response.getStatusCode());
+
     }
 
 
@@ -80,4 +80,10 @@ public class TestPayroll {
 
     }
 
+    @Test
+    public void CheckDeleteMethod(){
+        int id = 1;
+        Response response = RestAssured.delete("/employees/delete/"+id);
+        Assert.assertEquals(200, response.getStatusCode());
+    }
 }
